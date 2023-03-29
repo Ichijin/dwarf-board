@@ -1,6 +1,7 @@
 @include ('common.header')
-  <div id="container_user">
-    <main id="main_chat">
+  <main id="main_user">
+    <div id="container_user">
+    
       <h2 class="title">Account<span>ユーザー管理</span></h2>
       @if ($errors->has('name'))
         <p class="alert">{{ $errors->first('name') }}</p>
@@ -15,7 +16,7 @@
         <table class="table_design">
           <thead>
             <tr class="tr_design">
-              <th class="th_design">id</th>
+              <th class="th_design th_design_id">id</th>
               <th class="th_design">ニックネーム</th>
               <th class="th_design">ユーザーID</th>
               <th class="th_design">パスワード</th>
@@ -61,8 +62,9 @@
             </tbody>
           @endforeach
         </table>
-      </div>
+      
     </main>
+    </div>
   </div>
 </body>
 @include ('common.footer')
