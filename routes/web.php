@@ -31,8 +31,8 @@ Route::get('/show', [IndexController::class, 'show'])->name('show');//掲示板�
 Route::post('/edite', [IndexController::class, 'edite']); //投稿編集画面
 Route::post('/destroy', [IndexController::class, 'destroy']); //投稿削除画面
 Route::get('/chat', [IndexController::class, 'chat']); //掲示板(4人)
-Route::post('/logout', [IndexController::class, 'logout']); //ログアウト
+Route::get('/logout', [IndexController::class, 'logout']); //ログアウト
 
 Route::get('/comment', [IndexController::class, 'comment'])->name('comment'); //コメント
-Route::post('/commit', [IndexController::class, 'commit']); //コメント機能
+Route::get('/commit', [IndexController::class, 'commit']); //コメント機能
 Route::post('/delite', [IndexController::class, 'delite']); //コメント削除機能

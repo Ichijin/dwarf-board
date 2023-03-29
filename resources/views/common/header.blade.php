@@ -35,24 +35,27 @@
 <body class="contact">
     
         <header class="pc">
-
-            <h1 class="logo">
+        <h1 class="logo">
             <input class="design_none" type="image" name="btn_confirm" src="images/logo.png"  alt="ホームへ" value="ホームへ" formmethod="get" formaction="{{ url('/home') }}" form="home_form" width="180">
             </h1>
 
             <!--PC用（801px以上端末）メニュー-->
             <nav id="menubar">
-		        <ul>
-		            <li class="menuimg menu1"><input class="design_none" type="submit" formmethod="GET" formaction="{{ url('/chat') }}"     value="ChatRoom" form="p_form"></li>
-		            <li class="menuimg menu2"><input class="design_none" type="submit" formmethod="GET" formaction="{{ url('/post') }}"     value="NewPost"  form="p_form"></li>
-		            <li class="menuimg menu3"><input class="design_none" type="submit" formmethod="GET"  formaction="{{ url('/show') }}"     value="MyChat"   form="p_form"></li>
-		            <li class="menuimg menu4"><input class="design_none" type="submit" formmethod="GET"  formaction="{{ url('/userList') }}" value="Account"  form="p_form"></li>
+                <ul>
+		            <li class="menuimg menu1"><a href="{{ url('/chat') }}" class="design_none">ChatRoom</a></li>
+		            <li class="menuimg menu2"><a href="{{ url('/post') }}" class="design_none">NewPost</a></li>
+		            <li class="menuimg menu3"><a href="{{ url('/show') }}" class="design_none">MyChat</a></li>
+		            <li class="menuimg menu4"><a href="{{ url('/userList') }}" class="design_none">Account</a></li>
                 </ul>
-                <form action="{{ url('logout') }}" method="post">
-                    @csrf
-                    <input type="submit" value="logout" class='logout'>
-                </form>
+
             </nav>
+
+
+            <!--PC用（801px以上端末）メニュー-->
+            <nav id="menubar">
+		        <li class='logout'><a href="{{ url('/logout') }}">logout</a></li>
+            </nav>
+
         </header>
         <!--/.pc-->
 
@@ -60,20 +63,16 @@
         <header class="sh">
 
             <h1 class="logo">
-            <input class="design_none" type="image" name="btn_confirm" src="images/logo.png"  alt="ホームへ" value="ホームへ" formmethod="get" formaction="{{ url('/home') }}" form="home_form" width="180">
+                <input class="design_none" type="image" name="btn_confirm" src="images/logo.png"  alt="ホームへ" value="ホームへ" formmethod="get" formaction="{{ url('/home') }}" form="home_form" width="180">
             </h1>
 
             <!--小さな端末用（800px以下端末）メニュー-->
             <div id="menubar-s">
                 <nav>
-                    <form action="{{ url('logout') }}" method="post">
-                         @csrf
-                         <input type="submit" value="logout" class='logout'>
-                    </form>
+                    <input type="submit" value="logout" class='logout' formaction="{{ url('logout') }}" formmethod="post">
                 </nav>
             </div>
             <!--/#menubar-s-->
-
         </header>
         <!--/.sh-->
     

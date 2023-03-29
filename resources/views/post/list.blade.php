@@ -3,9 +3,6 @@
     <div id="main_chat">
       <section id="pagetop">
         <h2 class="title">My Chat<span>掲示板</span></h2>
-        <form action="?" id="home_form">
-          <input type="hidden" name="user_id" value="{{ $users->id }}" />
-        </form>
         @if ($errors->has('new_title'))
           <p>{{ $errors->first('new_title') }}</p>
         @endif

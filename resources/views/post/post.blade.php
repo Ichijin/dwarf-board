@@ -4,7 +4,7 @@
     <form action="{{ url('/create') }}" method="POST" id="home_form">
       @csrf
       <div id="contents">
-        <div id="main_user">
+        <div id="main">
           <section class="post_box">
             <h2 class="title">New Post<span>新規投稿</span></h2>
             <div id="userName">

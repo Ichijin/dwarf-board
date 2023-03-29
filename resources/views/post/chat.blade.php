@@ -3,9 +3,6 @@
   <div id="main_chat">
     <h2 class="title">Chat Room<span>掲示板</span></h2>
     <section id="pagetop">
-      <form action="?" id="home_form">
-        <input type="hidden" name="user_id" value="{{ old('user_id', $user) }}" />
-      </form>
       @foreach($postdata as $post)
         <form action="?" id="home_form">
           @csrf
@@ -34,7 +31,7 @@
                 <th>つぶやき</th>
                 <td cols="30" rows="10" class="wl">{{ $post->post }}</td>
               </tr>
-              <input type="hidden" name="user_id" value="{{ old('user_id', $user) }}" >
+              <input type="hidden" name="user_id" value="{{ old('user_id', $user_id) }}" >
             </table>
            </div>
            <input class="btn_des" type="submit" name="comment" value="コメントする" formmethod="get" formaction="{{ url('/comment') }}" >

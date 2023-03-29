@@ -43,8 +43,8 @@
           </table>
         </div>
         <div class="c">
-          <input class="btn_des1" type="submit" name="commit" value="コメント投稿" formmethod="post" formaction="{{ url('/commit') }}">
-          <input class="btn_des1" type="submit" id="back_btn" name='back' value="戻る" formmethod="post" formaction="{{ url('/commit') }}">
+          <input class="btn_des1" type="submit" name="commit" value="コメント投稿" formmethod="get" formaction="{{ url('/commit') }}">
+          <input class="btn_des1" type="submit" id="back_btn" name='back' value="戻る" formmethod="get" formaction="{{ url('/commit') }}">
         </div>
       </form>
 

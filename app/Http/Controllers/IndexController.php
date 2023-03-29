@@ -30,8 +30,10 @@ class IndexController extends Controller
     }
 
     //ログアウト
-    public function logout()
+    public function logout(Request $request)
     {
+        $request->session()->flush('user_id');
+        $request->session()->has('user_id');
         return redirect()->route('login');
     }
 
@@ -50,9 +52,11 @@ class IndexController extends Controller
             'password' => 'required',
         ],
         [
-            'name.required' => 'ユーザー名は必須項目です。',
+            'name.required' => '名前は必須項目です。',
+            'name.unique' => '既に使われているユーザー名です。',
             'email.required'  => 'メールアドレスは必須項目です。',
-            'password.required' => 'パスワードは必須項目です。'
+            'email.unique' => '既に使われているメールアドレスです。',
+            'password.required'  => 'パスワードは必須項目です。',
         ]);
         $user = new User();
         $user->name = $request->name;
@@ -68,38 +72,34 @@ class IndexController extends Controller
         if(!$request->session()->get('user_id')) {
             return redirect('login');
         } else {
+            $user_id = session()->get('user_id');
             $users = DB::table('users')
             ->get();
-            $login = User::where('id', $request->id)->first();
-            $request->session()->flash('flash_test', 'フラッシュデータのセッションテスト');
-            session()->flash('user_id', $request->id);
-            $user_id = session()->get('user_id');
+            $login = User::where('id', $user_id)->first();
             return view('post/userList', compact('users', 'login', 'user_id'));
         }
-
     }
 
     //アカウント編集機能
     public function update(Request $request)
     {
-        session()->flash('user_id', $request->user_id);
         $request->validate( [
             'name'=>['required', Rule::unique('users')->ignore($request->user_id)],
             'email'=>['required', Rule::unique('users')->ignore($request->user_id)],
-            'password' => 'required',
+            'password'=>'required',
         ],
         [
-            'name.required' => 'ユーザー名は必須項目です。',
+            'name.required' => '名前は必須項目です。',
             'email.required'  => 'メールアドレスは必須項目です。',
             'password.required'  => 'パスワードは必須項目です。',
         ]);
 
-        $hidden_id = $request->user_id; //ログインしている人のid
-            $post = posts::where('user_id', $request->user_id);
+            $hidden_id = $request->user_id; //ログインしている人のid
+            $post = posts::where('user_id', $hidden_id);
             $post->update([
                 "name" => $request->name,
             ]);
-            $comment = Comment::where('user_id', $request->user_id);
+            $comment = Comment::where('user_id', $hidden_id);
             $comment->update([
                 "name" => $request->name,]);
             $users = User::find($hidden_id);
@@ -108,9 +108,7 @@ class IndexController extends Controller
             $users->password = $request->password;
             $users->update();
 
-            session()->flash('user_id', $hidden_id);
-            $return_id = session()->get('user_id');
-            return redirect()->route('test.show', ['id' => $return_id])
+            return redirect()->route('test.show')
             ->with('message', '編集完了しました');
     }
 
@@ -118,13 +116,13 @@ class IndexController extends Controller
     public function home(Request $request)
     {
         if($request->user_id) {
-            $request->session()->flash('user_id', $request->user_id);
+            $request->session()->put('user_id', $request->user_id);
             $user_id = $request->session()->get('user_id');
         } else {
-            $request->session()->flash('user_id', request()->query('id'));
+            $request->session()->put('user_id', request()->query('id'));
             $user_id = $request->session()->get('user_id');
         }
-        return view('post/index', compact('user_id'));
+        return view('common/header', compact('user_id'));
     }
 
     //新規投稿の画面表示
@@ -133,15 +131,15 @@ class IndexController extends Controller
         if(!$request->session()->get('user_id')) {
             return redirect('login');
         } else {
-            $user = User::where('id', $request->id)->first();
-            return view('post/post', compact('user'));
+        $user_id = session()->get('user_id');
+        $user = User::where('id', $user_id)->first();
+        return view('post/post', compact('user', 'user_id'));
         }
     }
 
     //新規投稿の機能
     public function create(Request $request)
     {
-        session()->flash('user_id', $request->user_id);
         $request->validate([
             'post_title' => 'required',
             'post' => 'required',
@@ -157,9 +155,7 @@ class IndexController extends Controller
         $post->post = $request->post;
         $post->save();
 
-        $id = $request->user_id;
-        session()->flash('user_id', $request->user_id);
-        return redirect()->route('show', ['id' => $id]);
+        return redirect()->route('show');
     }
 
     //掲示板（自分だけ）の表示
@@ -168,15 +164,15 @@ class IndexController extends Controller
         if(!$request->session()->get('user_id')) {
             return redirect('login');
         } else {
-            $users = User::where('id', $request->id)
+            $user_id = session()->get('user_id');
+            $users = User::where('id', $user_id)
             ->first();
-            $postdata = posts::where('user_id', $request->id)
+            $postdata = posts::where('user_id', $user_id)
             ->orderBy('created_at', 'desc')
             ->get();
 
-    return view('post/list', compact('users', 'postdata'));
+            return view('post/list', compact('users', 'postdata', 'user_id'));
         }
-
     }
 
     //掲示板(みんなの書き込み画面)
@@ -185,10 +181,10 @@ class IndexController extends Controller
         if(!$request->session()->get('user_id')) {
             return redirect('login');
         } else {
-            $user = $request->id;
+            $user_id = session()->get('user_id');
             $postdata =  Posts::orderBy('created_at', 'desc')->get();
             $users = DB::table('users')->get();
-            return view('post/chat', compact('postdata', 'user', 'users'));
+            return view('post/chat', compact('postdata', 'user_id', 'users'));
         }
     }
 
@@ -201,16 +197,12 @@ class IndexController extends Controller
 
         $comment = comment::where('post_id', $post_id)->delete();
 
-        session()->flash('user_id', $request->user_id);
-        $user_id = session()->get('user_id');
-
-        return redirect()->route('show', ['id' => $user_id]);
+        return redirect()->route('show');
     }
 
     //掲示板（自分だけ）の内容編集
     public function edite(Request $request)
     {
-        session()->flash('user_id', $request->user_id);
         $request->validate([
             'new_title' => 'required',
             'new_post' => 'required',
@@ -226,16 +218,13 @@ class IndexController extends Controller
         $posts->created_at = $request->new_created_at;
         $posts->update();
 
-        session()->flash('user_id', $request->user_id);
-        $user_id = session()->get('user_id');
-
-        return redirect()->route('show', ['id' => $user_id]);
+        return redirect()->route('show');
     }
 
     //コメント画面表示
     public function comment(Request $request)
     {
-        if(!$request->session()->get('user_id') && !$request->post_id) {
+        if(!$request->session()->get('user_id')) {
             return redirect('login');
         } elseif ($request->post_id) {
             $post_id = $request->post_id;
@@ -259,11 +248,6 @@ class IndexController extends Controller
             $comments = comment::where('post_id', $post_id)
             ->get();
             $all = DB::table('users')->get();
-
-            $comment = Comment::where('user_id', $request->user_id);
-            $comment->update([
-                "name" => $request->name,
-            ]);
             return view('post/comment', compact('post', 'user','comments', 'img','all'));
         }
     }
@@ -272,10 +256,8 @@ class IndexController extends Controller
     public function commit(Request $request)
     {
         if($request->input('back') == '戻る'){
-            $request->session()->flash('user_id', $request->user_id);
             return redirect('/chat')
                         ->withInput($request->only(['user_id']));
-
         } else {
             $request->validate([
                 'comment' => 'required',
@@ -287,14 +269,13 @@ class IndexController extends Controller
             $user = User::find($request->user_id);
             $comments = Comment::where('post_id', $request->post_id)->get();
 
-            $comment = new Comment();
+            $comment = new comment();
             $comment->user_id = $request->user_id;
-            $comment->post_id =  $request->post_id;
+            $comment->post_id = $request->post_id;
             $comment->name = $user->name;
             $comment->comment = $request->comment;
             $comment->save();
 
-            session()->flash('user_id', $request->user_id);
             session()->flash('post_id', $request->post_id);
             session()->put('img', $request->img);
 
@@ -307,11 +288,8 @@ class IndexController extends Controller
         {
             $comment_id = $request->comment_id;
             $comment = Comment::find($comment_id)->destroy($comment_id);
-
-            session()->flash('user_id', $request->user_id);
             session()->flash('post_id', $request->post_id);
             session()->put('img', $request->img);
-
             return redirect()->action([IndexController::class, 'comment']);
         }
 }
