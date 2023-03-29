@@ -32,7 +32,6 @@
 </head>
 
 <body class="contact">
-    
         <header class="pc">
 
             <h1 class="logo">
