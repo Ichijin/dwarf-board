@@ -42,12 +42,17 @@
 
             <!--PC用（801px以上端末）メニュー-->
             <nav id="menubar">
+		        <ul>
+		            <li class="menuimg menu1"><input class="design_none" type="submit" formmethod="GET" formaction="{{ url('/chat') }}"     value="ChatRoom" form="p_form"></li>
+		            <li class="menuimg menu2"><input class="design_none" type="submit" formmethod="GET" formaction="{{ url('/post') }}"     value="NewPost"  form="p_form"></li>
+		            <li class="menuimg menu3"><input class="design_none" type="submit" formmethod="GET"  formaction="{{ url('/show') }}"     value="MyChat"   form="p_form"></li>
+		            <li class="menuimg menu4"><input class="design_none" type="submit" formmethod="GET"  formaction="{{ url('/userList') }}" value="Account"  form="p_form"></li>
+                </ul>
                 <form action="{{ url('logout') }}" method="post">
                     @csrf
                     <input type="submit" value="logout" class='logout'>
                 </form>
             </nav>
-
         </header>
         <!--/.pc-->
 
