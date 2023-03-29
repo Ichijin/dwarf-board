@@ -116,23 +116,32 @@ header.pc p {
 /*メニュー１個あたりの設定*/
 
 
+/*メインメニュー
+---------------------------------------------------------------------------*/
+/*メニュー１個あたりの設定*/
 #menubar li {
 	font-size: 12px;	/*文字サイズ*/
 	position: relative;
 }
-#menubar li input {
+#menubar li a {
 	display:  block;text-decoration: none;
 	border-bottom: 1px solid #a59c8f;	/*下線の幅、線種、色*/
-	width: 100%;	/*幅*/
+	width: auto;	/*幅*/
 	height: 100px;	/*高さ*/
 	padding-left: 80px;	/*左に空ける余白*/
 }
-/*マウスオン時*/
-header:hover #menubar li input:hover {
-	background-color: rgba(165,156,143,0.2);	/*108,156,222はリンクカラーをRGB値で表した数字で、0.2は色が20%出た状態。*/
+
+/*テキスト*/
+#menubar li a span {
+	
+}
+/*マウスオン時のテキスト*/
+header #menubar li a span {
+	display: block;	/*表示させる*/
+	padding-top: 40px;	/*上に空ける余白。上下のバランスをとります。*/
 }
 /*メニュー用アイコン設定（menu1〜memu4までの共通設定）*/
-.menuimg input {
+.menuimg a {
 	width: 60px;	/*幅*/
 	height: 60px;	/*高さ*/
 	display: inline-block;
@@ -140,26 +149,31 @@ header:hover #menubar li input:hover {
 	background-repeat: no-repeat;
 	background-size: 60px 300px;	/*実際のアイコン画像（icon.png）全体の大きさの幅、高さのそれぞれ「半分」。解像度を高くするため半分の数字にしています。*/
 }
+
 /*menu1*/
-.menu1 input {
+.menu1 a {
 	background-position: 20px 20px;		/*背景画像の左から20px、上から20pxの部分を読み込む指定*/
 }
 /*menu2*/
-.menu2 input {
+.menu2 a {
 	background-position: 20px -40px;	/*背景画像の左から20px、上から-40px（上のmenu1の20からアイコンの高さ分の60をずらした）の部分を読み込む指定*/
 }
 /*menu3*/
-.menu3 input {
+.menu3 a {
 	background-position: 20px -100px;	/*背景画像の左から20px、上から-100px（上のmenu2の-40からアイコンの高さ分の60をずらした）の部分を読み込む指定*/
 }
 /*menu4*/
-.menu4 input {
+.menu4 a {
 	background-position: 20px -160px;	/*背景画像の左から20px、上から-160px（上のmenu3の-100からアイコンの高さ分の60をずらした）の部分を読み込む指定*/
 }
+
 /*スマホ用メニューを表示させない*/
 #menubar-s {display: none;}
 /*３本バーアイコンを表示させない*/
 #menubar_hdr {display: none;}
+
+
+
 
 /*facebookやtwitterなどのアイコンブロック
 ---------------------------------------------------------------------------*/
@@ -1009,10 +1023,7 @@ body {
 }
 
 
-#container_user {
-	width: 1300px;
-	padding: 0;
-}
+
 
 .edit_sec {
 	display: flex;

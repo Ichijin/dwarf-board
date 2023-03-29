@@ -42,20 +42,13 @@
             <!--PC用（801px以上端末）メニュー-->
             <nav id="menubar">
                 <ul>
-		            <li class="menuimg menu1"><a href="{{ url('/chat') }}" class="design_none">ChatRoom</a></li>
-		            <li class="menuimg menu2"><a href="{{ url('/post') }}" class="design_none">NewPost</a></li>
-		            <li class="menuimg menu3"><a href="{{ url('/show') }}" class="design_none">MyChat</a></li>
-		            <li class="menuimg menu4"><a href="{{ url('/userList') }}" class="design_none">Account</a></li>
+                <li class="menuimg menu1"><a href="{{ url('/chat') }}" class="design_menu design_none"><span class="menu_span">ChatRoom</span></a></li>
+		            <li class="menuimg menu2"><a href="{{ url('/post') }}" class="design_menu design_none"><span class="menu_span">NewPost</span></a></li>
+		            <li class="menuimg menu3"><a href="{{ url('/show') }}" class="design_menu design_none"><span class="menu_span">MyChat</span></a></li>
+		            <li class="menuimg menu4"><a href="{{ url('/userList') }}" class="design_menu design_none"><span class="menu_span">Account</span></a></li>
                 </ul>
-
+                    <li class='logout'><a href="{{ url('/logout') }}">logout</a></li>
             </nav>
-
-
-            <!--PC用（801px以上端末）メニュー-->
-            <nav id="menubar">
-		        <li class='logout'><a href="{{ url('/logout') }}">logout</a></li>
-            </nav>
-
         </header>
         <!--/.pc-->
 
