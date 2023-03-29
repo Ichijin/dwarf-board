@@ -1,7 +1,7 @@
 @include ('common.header')
+
   <main id="main_user">
     <div id="container_user">
-    
       <h2 class="title">Account<span>ユーザー管理</span></h2>
       @if ($errors->has('name'))
         <p class="alert">{{ $errors->first('name') }}</p>
