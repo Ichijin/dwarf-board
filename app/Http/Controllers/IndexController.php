@@ -122,7 +122,7 @@ class IndexController extends Controller
             $request->session()->put('user_id', request()->query('id'));
             $user_id = $request->session()->get('user_id');
         }
-        return view('common/header', compact('user_id'));
+        return view('post/index', compact('user_id'));
     }
 
     //新規投稿の画面表示

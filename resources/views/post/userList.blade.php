@@ -56,7 +56,7 @@
                 <td class="td_design">{{ $user->id }}</td>
                 <td class="td_design">{{ $user->name }}</td>
                 <td class="td_design">{{ $user->email }}</td>
-                <td class="td_design"><img class="icon2" src="/public/images/{{ $user->user_img }}" name="user_img"><span>{{ $user->user_img }}</span></td>
+                <td class="td_design"><img class="icon2" src="../public/images/{{ $user->user_img }}" name="user_img"><span>{{ $user->user_img }}</span></td>
               </tr>
             </tbody>
           @endforeach

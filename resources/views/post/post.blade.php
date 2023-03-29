@@ -14,7 +14,7 @@
                   <input type="hidden" name="user_name" value="{{ $user->name }}">
                   <p class="post_user">{{ $user->name }}</p>
                 </div>
-                <img class="icon2" src="/public/images/{{ $user->user_img }}" name="user_img">
+                <img class="icon2" src="..z/public/images/{{ $user->user_img }}" name="user_img">
               </div>
             </div>
             <div id="postTitle">
