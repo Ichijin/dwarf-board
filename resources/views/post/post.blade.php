@@ -1,4 +1,5 @@
 @include('common.header')
+
 <body>
   <main>
     <form action="{{ url('/create') }}" method="POST" id="home_form">
