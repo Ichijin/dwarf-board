@@ -47,8 +47,8 @@
 		            <li class="menuimg menu3"><a href="{{ url('/show') }}" class="design_menu design_none"><span class="menu_span">MyChat</span></a></li>
 		            <li class="menuimg menu4"><a href="{{ url('/userList') }}" class="design_menu design_none"><span class="menu_span">Account</span></a></li>
                 </ul>
-                    <li class='logout'><a href="{{ url('/logout') }}">logout</a></li>
             </nav>
+            <li class='logout'><a href="{{ url('/logout') }}">logout</a></li>
         </header>
         <!--/.pc-->
 
